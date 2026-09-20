@@ -12,6 +12,7 @@ output-dir knowledge
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import sys
 from pathlib import Path
@@ -152,6 +153,23 @@ def html_to_markdown(root: Tag) -> str:
             text = element.get_text(" ", strip=True)
             if text:
                 lines.append(f"- {text}")
+
+    for component in root.find_all("stb-icon-text"):
+        raw_data = component.get("aem-data")
+        if not raw_data:
+            continue
+        try:
+            data = json.loads(raw_data)
+        except (TypeError, json.JSONDecodeError):
+            continue
+
+        title = data.get("title_t", "").strip()
+        description = data.get("description_t", "")
+        description_text = BeautifulSoup(description, "html.parser").get_text(" ", strip=True)
+        if title:
+            lines.append(f"\n### {title}")
+        if description_text:
+            lines.append(description_text)
 
     return clean_text("\n".join(lines))
 
