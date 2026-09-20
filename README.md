@@ -77,11 +77,7 @@ pip install -r requirements.txt
 
 ### Step 4 — Set your Gemini API key
 
-```bash
-cp .env.example .env
-```
-
-Open `.env` and set your key:
+Open `backend\config.py` and set your key:
 
 ```env
 GOOGLE_API_KEY=your_actual_api_key_here
@@ -120,7 +116,6 @@ The app opens in your browser (usually `http://localhost:8501`).
 If you already completed setup once, use:
 
 ```bash
-cd /Users/Ishan_Gaurav/Documents/Python-Play/mcp
 source .venv/bin/activate
 streamlit run frontend/travel_assistant_frontend.py
 ```
